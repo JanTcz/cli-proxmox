@@ -1,0 +1,9 @@
+#!/bin/sh
+# Nothing red is committed: the check (lint, types, tests at 100 % coverage) must be green. Installed by `npm run hooks`.
+# The one exception, a contract's RED commit, is passed explicitly with --no-verify.
+# git runs a hook with its own variables set (GIT_DIR, GIT_INDEX_FILE, …): the check runs without them, as from a plain shell.
+for name in $(env | sed -n 's/^\(GIT_[A-Za-z0-9_]*\)=.*/\1/p'); do unset "$name"; done
+cd "$(git rev-parse --show-toplevel)" && npm run check > /dev/null 2>&1 || {
+  echo 'pre-commit: the check is red — run npm run check to see why' >&2
+  exit 1
+}

@@ -1,0 +1,23 @@
+{
+  "name": "cli-proxmox",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "A command line for Proxmox VE and its MCP twin: one catalog, scoped and audited, on Proxmox's own API schema.",
+  "bin": { "proxmox": "bin/proxmox.ts" },
+  "engines": { "node": ">=26" },
+  "scripts": {
+    "lint": "oxlint --deny-warnings",
+    "typecheck": "tsc",
+    "test": "node --test --test-timeout=20000 --experimental-test-coverage --test-coverage-include='src/**' --test-coverage-exclude='src/main.ts' --test-coverage-exclude='src/api/pve.gen.ts' --test-coverage-lines=100 --test-coverage-branches=100 --test-coverage-functions=100 'test/*.test.ts'",
+    "check": "npm run lint && npm run typecheck && npm test",
+    "generate": "node scripts/generate.ts",
+    "hooks": "git config core.hooksPath hooks"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "oxlint": "^1.86.0",
+    "typescript": "^7.0.2"
+  }
+}
