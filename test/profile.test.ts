@@ -22,6 +22,9 @@ function make(name: string, extra: Record<string, string> = {}, mode = 0o600): s
 test('UC-4: a profile\'s files, trimmed, and the tier read by default', () => {
   make('lab');
   assert.deepEqual(loadProfile(dir, 'lab'), { name: 'lab', url: 'https://192.168.0.35:8006', ca: 'PEM', tokenId: 'cli@pve!lab', secret: 'secret', tier: 'read' });
+  make('only-tier', { 'profile.json': JSON.stringify({ tier: 'destructive' }) });
+  assert.equal(loadProfile(dir, 'only-tier').tier, 'destructive');
+  assert.equal('vmids' in loadProfile(dir, 'only-tier'), false);
   make('ops', { 'profile.json': JSON.stringify({ tier: 'write', vmids: [101, 102], pool: 'codiak' }) });
   assert.deepEqual(loadProfile(dir, 'ops'), { name: 'ops', url: 'https://192.168.0.35:8006', ca: 'PEM', tokenId: 'cli@pve!lab', secret: 'secret', tier: 'write', vmids: [101, 102], pool: 'codiak' });
 });
@@ -31,11 +34,11 @@ test('UC-4: the name — given, else the environment, else the default file, els
   make('env');
   make('chosen');
   assert.equal(loadProfile(dir, undefined, {}).name, 'default');
-  writeFileSync(join(dir, 'default'), 'chosen\n');
+  writeFileSync(join(dir, 'default-profile'), 'chosen\n');
   assert.equal(loadProfile(dir, undefined, {}).name, 'chosen');
   assert.equal(loadProfile(dir, undefined, { PROXMOX_PROFILE: 'env' }).name, 'env');
   assert.equal(loadProfile(dir, 'lab', { PROXMOX_PROFILE: 'env' }).name, 'lab');
-  rmSync(join(dir, 'default'));
+  rmSync(join(dir, 'default-profile'));
 });
 
 test('UC-4: the config directory — PROXMOX_CONFIG, else ~/.config/cli-proxmox', () => {

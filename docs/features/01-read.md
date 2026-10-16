@@ -20,7 +20,7 @@ code; 100 % coverage as in our other repositories. This slice reads only: nothin
   not answer at all is said apart from one that answers slowly (URL, the connect error, the timeout). Test: `test/transport.test.ts`.
 - **UC-4 Profiles.** A profile is a directory `<config>/<name>/` (config: `PROXMOX_CONFIG`, else `~/.config/cli-proxmox`): `url`,
   `ca.pem`, `token-id`, `token` and an optional `profile.json` (`tier`, `vmids`, `pool`). The name: `--profile`, else
-  `PROXMOX_PROFILE`, else the file `<config>/default`, else `default`. A token file readable by group or others is refused, as is
+  `PROXMOX_PROFILE`, else the file `<config>/default-profile`, else `default` (not `<config>/default`: that is the profile named default). A token file readable by group or others is refused, as is
   a profile with a file missing — by name. The tier is `read` unless the profile says more. Test: `test/profile.test.ts`.
 - **UC-5 Scope.** A profile's `vmids` and `pool` fence the guests it sees and touches, beside the token's own ACL: `vm ls` lists
   only the guests in scope; `vm show` of one outside is refused by name before it is read. A profile with neither sees what the
@@ -39,4 +39,15 @@ code; 100 % coverage as in our other repositories. This slice reads only: nothin
 
 Proxmox VE 9.2.20 on the lab host. The fakes in the tests answer as its API does (shapes taken from the schema and from the host);
 `npm run contract` (not part of the check, it needs the host) runs the read commands against the real one with a profile and
-checks each answer's shape. Proven on the host when the token is set up.
+checks each answer's shape. Proven 2026-10-16 on the lab host (PVE 9.2.20): 6 of 6 held.
+
+## The lab's token (set up 2026-10-16 on 192.168.0.35)
+
+Least privilege for reading, two roles so that no VM outside the pool is visible:
+- pool `codiak`: VMs 101–104 (codiak) and 111, 114, 115 (webai);
+- role `CliProxmoxGuests` = VM.Audit, Pool.Audit on `/pool/codiak` — the guests;
+- role `CliProxmoxSystem` = Sys.Audit, Datastore.Audit on `/` — nodes, tasks, storages, thin pools (`disks/lvmthin` asks for
+  Sys.Audit on `/`), no guest;
+- user `cli@pve`, token `cli@pve!lab` with privilege separation and a one-year expiry, the same ACLs on the token.
+Seen through it: `vm ls` lists the seven pool VMs, `vm show 200` (win11, outside) is `no VM 200`. Profile `~/.config/cli-proxmox/lab`
+(`pool: codiak`, tier `read`), the CA `/etc/pve/pve-root-ca.pem`.

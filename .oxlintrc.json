@@ -21,6 +21,7 @@
     "typescript/no-non-null-assertion": "off"
   },
   "ignorePatterns": [
-    "node_modules"
+    "node_modules",
+    "src/api/pve.gen.ts"
   ]
 }

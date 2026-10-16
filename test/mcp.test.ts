@@ -7,12 +7,12 @@ import { OPERATIONS } from '../src/catalog.ts';
 type Ran = { argv: string[] };
 function server(answer: (argv: string[]) => { code: number; out?: string[]; err?: string[] } = () => ({ code: 0, out: ['105'] })) {
   const ran: Ran[] = [];
-  const handle = mcpServer(OPERATIONS, async (argv, io) => {
+  const handle = mcpServer(OPERATIONS, (argv, io) => {
     ran.push({ argv });
     const said = answer(argv);
     for (const line of said.out ?? []) io.out(line);
     for (const line of said.err ?? []) io.err(line);
-    return said.code;
+    return Promise.resolve(said.code);
   }, '0.1.0');
   const ask = async (message: object) => {
     const line = await handle(JSON.stringify({ jsonrpc: '2.0', ...message }));

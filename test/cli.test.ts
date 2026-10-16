@@ -97,6 +97,7 @@ test('UC-6: task show and next-id', async () => {
 
 test('UC-6: usage — no command, an unknown one, a missing argument, an unknown flag, --help', async () => {
   for (const argv of [[], ['vm'], ['vm', 'eat'], ['vm', 'show'], ['vm', 'ls', '--colour', 'red'], ['thin', 'ls', '--warn']]) {
+    // oxlint-disable-next-line no-await-in-loop -- one call after another, each its own fake
     const { code, err } = await cli(argv);
     assert.equal(code, 2, argv.join(' '));
     assert.match(err.join('\n'), /usage: proxmox/u, argv.join(' '));
