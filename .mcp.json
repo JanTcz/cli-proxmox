@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "proxmox": {
+      "command": "node",
+      "args": ["bin/proxmox.ts", "mcp"],
+      "env": {}
+    }
+  }
+}

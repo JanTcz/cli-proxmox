@@ -14,4 +14,11 @@ proxmox mcp                       # the same commands as MCP tools, over stdio
   (`read` by default, `write`, `destructive`).
 - Profiles in `~/.config/cli-proxmox/<name>/`: `url`, `ca.pem`, `token-id`, `token` (mode 600), optional `profile.json`.
 
+## As an MCP server
+
+The repository is an MCP server: `.mcp.json` names `proxmox mcp`, so a client that reads it (Claude Code, opened in this
+directory) has the tools at once — one a command (`vm_ls`, `vm_show`, `thin_ls`, …), read-only and destructive hints from each
+command's tier, every call run through the CLI with the default profile (or `profile` in the call). Elsewhere:
+`claude mcp add proxmox -- node <path>/bin/proxmox.ts mcp`.
+
 Design: [docs/DESIGN.md](docs/DESIGN.md). Requires Node ≥ 26. MIT.
