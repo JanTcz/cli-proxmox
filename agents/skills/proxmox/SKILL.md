@@ -16,6 +16,15 @@ Every call takes `json: true` for the whole answer and `profile` to choose a pro
 - **A refusal is an answer.** `VM 200 is outside the profile …` and `the profile … allows read` are the fences working; say so,
   do not look for a way around them.
 
+## Inside a guest: not this tool
+
+These tools act on a VM as a whole — never inside it: no guest-agent or SSH exec, by design (`qm guest exec` through the
+host's root is root over every guest). For work inside a guest take the narrowest way that does it:
+1. the service's own API in the guest (its git over HTTPS, its HTTP API, its CLI with its own token);
+2. SSH to the guest as its own user, with a key;
+3. only when the guest cannot be reached (its network down, it hangs): root on the Proxmox host and `qm guest exec` — and say why
+   1 and 2 cannot.
+
 Setting up a profile (once, by a person): `~/.config/cli-proxmox/<name>/` with `url`, `ca.pem` (the host's
 `/etc/pve/pve-root-ca.pem`), `token-id`, `token` (mode 600) and an optional `profile.json` (`{"tier": "read", "pool": "lab"}`).
 See https://github.com/JanTcz/cli-proxmox.
