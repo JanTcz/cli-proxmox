@@ -1,0 +1,15 @@
+{
+  // The npm package's build: Node does not run TypeScript from node_modules, so the published `proxmox` is the sources as JS in dist/.
+  // Only erasable syntax is used, so the JS is the sources without their types; `.ts` imports are rewritten to `.js`.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "dist",
+    "rootDir": ".",
+    "rewriteRelativeImportExtensions": true,
+    "declaration": false,
+    "sourceMap": false
+  },
+  "include": ["src", "bin"],
+  "exclude": ["node_modules", "test", "scripts"]
+}

@@ -18,3 +18,5 @@ jobs:
           node-version: 26
       - run: npm ci
       - run: npm run check
+      - name: The package builds, and the built command runs
+        run: npm run build && node dist/bin/proxmox.js --help

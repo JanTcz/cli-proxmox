@@ -14,6 +14,11 @@ proxmox mcp                       # the same commands as MCP tools, over stdio
   (`read` by default, `write`, `destructive`).
 - Profiles in `~/.config/cli-proxmox/<name>/`: `url`, `ca.pem`, `token-id`, `token` (mode 600), optional `profile.json`.
 
+## Install
+
+`npx -y cli-proxmox@0 <command>`, or as a plugin for Claude Code and Codex from [JanTcz/marketplace](https://github.com/JanTcz/marketplace)
+(`/plugin install cli-proxmox@jantcz`): the MCP server and a skill for the agent ([agents/](agents/)).
+
 ## As an MCP server
 
 The repository is an MCP server: `.mcp.json` names `proxmox mcp`, so a client that reads it (Claude Code, opened in this

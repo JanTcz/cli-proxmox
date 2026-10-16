@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "proxmox": {
+      "command": "npx",
+      "args": ["-y", "cli-proxmox@0", "mcp"]
+    }
+  }
+}

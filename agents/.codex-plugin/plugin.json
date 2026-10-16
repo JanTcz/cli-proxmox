@@ -1,0 +1,41 @@
+{
+  "name": "cli-proxmox",
+  "version": "0.1.0",
+  "description": "Proxmox VE for coding agents: an MCP server whose tools are the proxmox CLI commands — scoped by an API token and a profile, read-only by default, on Proxmox's own API schema.",
+  "author": {
+    "name": "Jan Truhlar",
+    "email": "me@jant.cz",
+    "url": "https://github.com/JanTcz"
+  },
+  "homepage": "https://github.com/JanTcz/cli-proxmox",
+  "repository": "https://github.com/JanTcz/cli-proxmox",
+  "license": "MIT",
+  "keywords": [
+    "proxmox",
+    "pve",
+    "virtual-machines",
+    "mcp",
+    "homelab"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "cli-proxmox",
+    "shortDescription": "See and run your Proxmox VE lab, scoped and audited",
+    "longDescription": "The proxmox CLI as MCP tools: list VMs with QEMU's own state (an I/O-error pause is not \"running\"), show a VM's config, storages and LVM-thin pool use with a threshold, tasks and the next free id. An API token with a custom role on a pool is the boundary; the profile fences VM ids and a pool and is read-only by default. Built on Proxmox's own API schema, no third-party client.",
+    "developerName": "Jan Truhlar",
+    "category": "Coding",
+    "capabilities": [
+      "Read"
+    ],
+    "websiteURL": "https://github.com/JanTcz/cli-proxmox",
+    "defaultPrompt": [
+      "Which lab VMs are running?",
+      "How full is the thin pool?",
+      "Is VM 101 really running or paused on an I/O error?"
+    ],
+    "brandColor": "#E57000",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/icon.svg"
+  }
+}

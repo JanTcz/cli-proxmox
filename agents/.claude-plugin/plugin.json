@@ -1,0 +1,20 @@
+{
+  "name": "cli-proxmox",
+  "version": "0.1.0",
+  "description": "Proxmox VE for coding agents: an MCP server whose tools are the proxmox CLI commands — scoped by an API token and a profile, read-only by default, on Proxmox's own API schema.",
+  "author": {
+    "name": "Jan Truhlar",
+    "email": "me@jant.cz",
+    "url": "https://github.com/JanTcz"
+  },
+  "homepage": "https://github.com/JanTcz/cli-proxmox",
+  "repository": "https://github.com/JanTcz/cli-proxmox",
+  "license": "MIT",
+  "keywords": [
+    "proxmox",
+    "pve",
+    "virtual-machines",
+    "mcp",
+    "homelab"
+  ]
+}

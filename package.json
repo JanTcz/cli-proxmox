@@ -1,13 +1,31 @@
 {
   "name": "cli-proxmox",
   "version": "0.1.0",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
   "description": "A command line for Proxmox VE and its MCP twin: one catalog, scoped and audited, on Proxmox's own API schema.",
-  "bin": {
-    "proxmox": "bin/proxmox.ts"
+  "type": "module",
+  "license": "MIT",
+  "author": "Jan Truhlar <me@jant.cz>",
+  "homepage": "https://github.com/JanTcz/cli-proxmox#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JanTcz/cli-proxmox.git"
   },
+  "bugs": "https://github.com/JanTcz/cli-proxmox/issues",
+  "keywords": [
+    "proxmox",
+    "pve",
+    "mcp",
+    "cli",
+    "homelab"
+  ],
+  "bin": {
+    "cli-proxmox": "dist/bin/proxmox.js",
+    "proxmox": "dist/bin/proxmox.js"
+  },
+  "files": [
+    "dist",
+    "agents"
+  ],
   "engines": {
     "node": ">=26"
   },
@@ -18,7 +36,9 @@
     "check": "npm run lint && npm run typecheck && npm test",
     "generate": "node scripts/generate.ts",
     "hooks": "git config core.hooksPath hooks",
-    "contract": "node scripts/contract.ts"
+    "contract": "node scripts/contract.ts",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "prepack": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^26.6.4",
